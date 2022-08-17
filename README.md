@@ -45,8 +45,6 @@
 - NestJs(Node.js)
 - TypeORM(ORM)
 - MySQL(RDBMS)
-## 요구사항
-### 1. 채용공고를 등록한다.
 
 # 2. 구현
  ### 1. 채용 공고를 등록합니다. 
