@@ -19,7 +19,10 @@ export class Notice {
     @Column()
     techstack: string;
 
-    @ManyToOne(() => Company)
-    @JoinColumn({name: 'company_id'})
+    @ManyToOne(
+        () => Company,
+        (company) => company.notices
+    )
+    @JoinColumn({ name: 'company_id' })
     company: Company;
 }

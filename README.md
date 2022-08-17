@@ -17,7 +17,7 @@
 
 #### notice(채용공고)
 - id: 채용공고 id
-- posion: 채용포지션
+- position: 채용포지션
 - compensation: 채용보상금
 - content: 채용내용
 - techstack: 사용 기술

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Notice } from "src/notice/notice.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Company {
@@ -14,4 +15,10 @@ export class Company {
 
     @Column()
     area: string;
+
+    @OneToMany(
+        () => Notice,
+        (notice) => notice.company
+    )
+    notices: Notice[];
 }
