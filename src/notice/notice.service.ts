@@ -33,16 +33,30 @@ export class NoticeService {
         });
     }
 
-    async updateNotice(id: number,updateNoticeDto: UpdateNoticeDto): Promise<Notice> {
+    async updateNotice(id: number, updateNoticeDto: UpdateNoticeDto): Promise<Notice> {
         const notice = await this.noticeRepository.findOne({
             where: { id }
         });
 
-        if(!notice){
+        if (!notice) {
             throw new NotFoundException('존재하지 않은 채용공고 입니다.');
         }
 
         Object.assign(notice, updateNoticeDto);
         return await this.noticeRepository.save(notice);
+    }
+
+    async deleteNotice(id: number) {
+        const notice = await this.noticeRepository.findOne({
+            where: { id }
+        });
+
+        if (!notice) {
+            throw new NotFoundException('존재하지 않은 채용공고 입니다.');
+        }
+
+        const result = await this.noticeRepository.delete(id);
+        return result.affected == 1 ? '채용공고가 성공적으로 삭제 되었습니다.'
+            : '채용공고 삭제에 실패하였습니다.';
     }
 }
