@@ -1,5 +1,6 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Param, Post, Put } from '@nestjs/common';
 import { CreateNoticeDto } from './dto/create.notice.dto';
+import { UpdateNoticeDto } from './dto/update.notice.dto';
 import { Notice } from './notice.entity';
 import { NoticeService } from './notice.service';
 
@@ -10,5 +11,10 @@ export class NoticeController {
     @Post()
     createNotice(@Body() createNoticeDto: CreateNoticeDto): Promise<Notice> {
         return this.noticeService.createNotice(createNoticeDto);
+    }
+
+    @Put(':id')
+    updateNotice(@Param('id') id: number,@Body() updateNoticeDto: UpdateNoticeDto): Promise<Notice> {
+        return this.noticeService.updateNotice(id, updateNoticeDto);
     }
 }

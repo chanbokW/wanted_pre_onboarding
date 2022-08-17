@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Company } from 'src/company/company.entity';
 import { Repository } from 'typeorm';
 import { CreateNoticeDto } from './dto/create.notice.dto';
+import { UpdateNoticeDto } from './dto/update.notice.dto';
 import { Notice } from './notice.entity';
 
 @Injectable()
@@ -15,7 +16,6 @@ export class NoticeService {
     ) { }
 
     async createNotice(createNotice: CreateNoticeDto): Promise<Notice> {
-        console.log(createNotice)
         const company = await this.companyRepository.findOne({
             where: { id: createNotice.companyId }
         });
@@ -23,14 +23,26 @@ export class NoticeService {
         if (!company) {
             throw new NotFoundException(`${createNotice.companyId}존재하지 않은 회사 정보입니다.`);
         }
-        // console.log(createNotice.toEntity(company));
 
-        return await this.noticeRepository.save({
+        return this.noticeRepository.save({
             company,
             position: createNotice.position,
             compensation: createNotice.compensation,
             content: createNotice.content,
             techstack: createNotice.techstack
         });
+    }
+
+    async updateNotice(id: number,updateNoticeDto: UpdateNoticeDto): Promise<Notice> {
+        const notice = await this.noticeRepository.findOne({
+            where: { id }
+        });
+
+        if(!notice){
+            throw new NotFoundException('존재하지 않은 채용공고 입니다.');
+        }
+
+        Object.assign(notice, updateNoticeDto);
+        return await this.noticeRepository.save(notice);
     }
 }
