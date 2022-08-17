@@ -10,7 +10,6 @@ export class CompanyController {
 
     @Post()
     createCompany(@Body()createCompanyDto: CreateCompanyDto):Promise<number> {
-        console.log(createCompanyDto);
         return this.companyService.createCompany(createCompanyDto);
     }
 

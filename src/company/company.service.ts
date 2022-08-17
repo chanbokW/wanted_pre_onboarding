@@ -19,11 +19,9 @@ export class CompanyService {
         const company = await this.companyRepository.findOne({
             where: { id },
         });
-
         if (!company) {
             throw new NotFoundException('존재하지 않은 회사입니다.');
         }
-
         return company;
     }
 
