@@ -7,6 +7,6 @@ export const tppeORMConfig : TypeOrmModuleOptions ={
     username: 'test',
     password: 'test',
     database: 'wanted',
-    entities: [__dirname + '/../**/*.entity.{js,ts}'],
+    entities: ["dist/**/*.entity{.ts,.js}"],
     synchronize: true
 }

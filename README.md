@@ -6,7 +6,7 @@
 #### company(회사)
 - id : 회사 id
 - name : 회사명 
-- contry : 국가 
+- nation : 국가 
 - area 지역
 
 #### user(회원)
