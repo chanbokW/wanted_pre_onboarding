@@ -74,7 +74,6 @@ export class NoticeService {
                 'notice.techstack'
             ]);
 
-        console.log(noticeQuery.search);
         if (noticeQuery.search != null) {
             findNotice.where(
                 `company.name LIKE :search
@@ -83,9 +82,40 @@ export class NoticeService {
                 or notice.position LIKE :search
                 or notice.techstack LIKE :search
             `,
-            { search: `%${noticeQuery.search}%`});
+                { search: `%${noticeQuery.search}%` });
         }
 
         return await findNotice.getRawMany();
+    }
+
+    async getNoticeDetail(id: number) {
+
+        const noticeOne = await this.noticeRepository.findOne({
+            where: { id },
+            relations: ['company.notices'],
+        });
+
+        const companyNoticeList = noticeOne.company.notices
+            .map(notice => notice.id,)
+            .filter(id => id != noticeOne.id,
+        );
+
+        const notice = this.noticeBuild(noticeOne);
+        notice['otherNotices'] = companyNoticeList;
+        return notice;
+    }
+
+    private noticeBuild(notice: Notice){
+        const noticeData = {
+            noticeId : notice.id,
+            companyName : notice.company.name,
+            nation : notice.company.nation,
+            area : notice.company.area,
+            position : notice.position,
+            compensation : notice.compensation,
+            techsstack : notice.techstack,
+            content : notice.content,
+        }
+        return noticeData;
     }
 }

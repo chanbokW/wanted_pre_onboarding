@@ -28,4 +28,9 @@ export class NoticeController {
     getAllNotice(@Query() noticeQuery?: NoticeQuery): Promise<Notice[]> {
         return this.noticeService.getAllNotice(noticeQuery);
     }
+
+    @Get(':id')
+    getNotice(@Param('id') id: number) {
+        return this.noticeService.getNoticeDetail(id);
+    }
 }
