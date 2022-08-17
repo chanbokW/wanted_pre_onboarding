@@ -14,6 +14,9 @@
 - name : 회원 명
 
 #### apply(채용공고 지원)
+- id : 채용공고지원 id
+- user_id : 회원 고유아이디
+- notice_id : 채용공고 고유아이디
 
 #### notice(채용공고)
 - id: 채용공고 id
