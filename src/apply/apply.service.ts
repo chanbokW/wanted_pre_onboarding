@@ -25,7 +25,7 @@ export class ApplyService {
         });
 
         if(apply){
-            throw new NotAcceptableException( apply.id + '지원하신 내역이 있습니다.');
+            throw new NotAcceptableException( '지원하신 내역이 있습니다.');
         }
 
         const user = await this.userRepository.findOne({
