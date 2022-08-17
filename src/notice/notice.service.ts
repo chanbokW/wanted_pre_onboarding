@@ -105,6 +105,8 @@ export class NoticeService {
         return notice;
     }
 
+
+
     private noticeBuild(notice: Notice){
         const noticeData = {
             noticeId : notice.id,

@@ -16,9 +16,6 @@ export class Company {
     @Column()
     area: string;
 
-    @OneToMany(
-        () => Notice,
-        (notice) => notice.company
-    )
+    @OneToMany(() => Notice, notice => notice.company)
     notices: Notice[];
 }
