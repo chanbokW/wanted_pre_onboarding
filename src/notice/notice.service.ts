@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Company } from 'src/company/company.entity';
 import { Repository } from 'typeorm';
 import { CreateNoticeDto } from './dto/create.notice.dto';
+import { NoticeQuery } from './dto/notice.query';
 import { UpdateNoticeDto } from './dto/update.notice.dto';
 import { Notice } from './notice.entity';
 
@@ -60,7 +61,31 @@ export class NoticeService {
             : '채용공고 삭제에 실패하였습니다.';
     }
 
-    async getAllNotice(): Promise<Notice[]> {
-        return await this.noticeRepository.find();
+    async getAllNotice(noticeQuery?: NoticeQuery): Promise<Notice[]> {
+        const findNotice = this.noticeRepository.createQueryBuilder('notice')
+            .leftJoinAndSelect(Company, 'company', 'company.id = company_id')
+            .select([
+                'notice.id',
+                'company.name',
+                'company.nation',
+                'company.area',
+                'notice.position',
+                'notice.compensation',
+                'notice.techstack'
+            ]);
+
+        console.log(noticeQuery.search);
+        if (noticeQuery.search != null) {
+            findNotice.where(
+                `company.name LIKE :search
+                or company.nation LIKE :search
+                or company.area LIKE :search
+                or notice.position LIKE :search
+                or notice.techstack LIKE :search
+            `,
+            { search: `%${noticeQuery.search}%`});
+        }
+
+        return await findNotice.getRawMany();
     }
 }

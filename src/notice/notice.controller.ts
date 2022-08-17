@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CreateNoticeDto } from './dto/create.notice.dto';
+import { NoticeQuery } from './dto/notice.query';
 import { UpdateNoticeDto } from './dto/update.notice.dto';
 import { Notice } from './notice.entity';
 import { NoticeService } from './notice.service';
@@ -24,7 +25,7 @@ export class NoticeController {
     }
 
     @Get()
-    getAllNotice(): Promise<Notice[]> {
-        return this.noticeService.getAllNotice();
+    getAllNotice(@Query() noticeQuery?: NoticeQuery): Promise<Notice[]> {
+        return this.noticeService.getAllNotice(noticeQuery);
     }
 }
