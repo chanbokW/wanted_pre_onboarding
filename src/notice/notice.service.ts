@@ -59,4 +59,8 @@ export class NoticeService {
         return result.affected == 1 ? '채용공고가 성공적으로 삭제 되었습니다.'
             : '채용공고 삭제에 실패하였습니다.';
     }
+
+    async getAllNotice(): Promise<Notice[]> {
+        return await this.noticeRepository.find();
+    }
 }

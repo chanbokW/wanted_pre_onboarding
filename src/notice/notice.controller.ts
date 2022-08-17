@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CreateNoticeDto } from './dto/create.notice.dto';
 import { UpdateNoticeDto } from './dto/update.notice.dto';
 import { Notice } from './notice.entity';
@@ -21,5 +21,10 @@ export class NoticeController {
     @Delete(':id')
     deleteNotice(@Param('id') id: number) {
         return this.noticeService.deleteNotice(id);
+    }
+
+    @Get()
+    getAllNotice(): Promise<Notice[]> {
+        return this.noticeService.getAllNotice();
     }
 }
